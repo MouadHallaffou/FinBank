@@ -1,6 +1,7 @@
 package main.java.models;
 
 import java.util.ArrayList;
+import main.java.controllers.GestionnaireController;
 
 public class Gestionnaire extends User {
     private ArrayList<User> gestionnaires = new ArrayList<>();
@@ -19,4 +20,9 @@ public class Gestionnaire extends User {
         this.gestionnaires = gestionnaires;
     }
 
+    public void addGestionnaire() {
+        GestionnaireController gestionnaireController = new GestionnaireController();
+        gestionnaires.add(gestionnaireController.createNewGestionnaire());
+    }
+        
 }

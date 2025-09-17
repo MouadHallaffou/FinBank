@@ -26,10 +26,10 @@ public class GestionnaireMenu {
             System.out.println("╔═════════════════════════════════════════╗");
             System.out.println("║         Welcome MOUAD HALLAFFOU         ║");
             System.out.println("╚═════════════════════════════════════════╝");
-            System.out.println("1. ➤ Créer un client");
-            System.out.println("2. ➤ Mettre à jour les informations");
+            System.out.println("1. ➤ Ajoute un client");
+            System.out.println("2. ➤ Mettre a jour les informations");
             System.out.println("3. ➤ Fermer un compte");
-            System.out.println("4. ➤ Consulter les relevés");
+            System.out.println("4. ➤ Consulter les releves");
             System.out.println("5. ➤ Exit");
             System.out.print("✦ Enter your choice: ");
 
