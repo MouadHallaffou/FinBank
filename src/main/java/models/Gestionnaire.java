@@ -5,6 +5,7 @@ import main.java.controllers.GestionnaireController;
 
 public class Gestionnaire extends User {
     private ArrayList<User> gestionnaires = new ArrayList<>();
+
     public Gestionnaire(int userID, String firstName, String lastName, String email, String password) {
         super(userID, firstName, lastName, email, password);
     }
@@ -24,5 +25,5 @@ public class Gestionnaire extends User {
         GestionnaireController gestionnaireController = new GestionnaireController();
         gestionnaires.add(gestionnaireController.createNewGestionnaire());
     }
-        
+
 }

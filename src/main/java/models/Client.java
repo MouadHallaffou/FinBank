@@ -33,4 +33,8 @@ public class Client extends User {
         return comptes;
     }
 
+    public void addClient(User client) {
+        clients.add(client);
+    }
+
 }

@@ -2,13 +2,13 @@ package main.java.enums;
 
 public class CompteEnums {
     public enum TypeTransaction {
-        DEPOT,
-        RETRAIT,
-        VIREMENT,
+        DEPOSIT,
+        WITHDRAWAL,
+        TRANSFER,
     }
 
     public enum TypeCompte {
-        COURANT, 
+        CURRENT,
         EPARGNE
     }
 }

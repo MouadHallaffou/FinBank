@@ -3,7 +3,9 @@ package main.java.controllers;
 import java.util.Scanner;
 
 import main.java.models.Client;
+import main.java.models.Compte;
 import main.java.models.Gestionnaire;
+import main.java.services.BanqueService;
 import main.java.utils.Validation;
 
 public class GestionnaireController {
@@ -15,8 +17,8 @@ public class GestionnaireController {
         defaultGestionnaire.setUserID(nextUserID++);
         defaultGestionnaire.setFirstName("MOUAD");
         defaultGestionnaire.setLastName("HALLAFFOU");
-        defaultGestionnaire.setEmail("mouadhallaffou@gmail.com");
-        defaultGestionnaire.setPassword("mouad1234");
+        defaultGestionnaire.setEmail("mouad@gmail.com");
+        defaultGestionnaire.setPassword("1234");
         return defaultGestionnaire;
     }
 
@@ -85,13 +87,13 @@ public class GestionnaireController {
         Client client = new Client();
 
         client.setUserID(nextUserID++);
-        System.out.println("ID Client assigne : " + client.getUserID());
+        System.out.println("ID Client assigné : " + client.getUserID());
         System.out.println();
 
-        System.out.print("Prenom du client : ");
+        System.out.print("Prénom du client : ");
         String firstName = scanner.nextLine().trim();
         while (firstName.isEmpty()) {
-            System.out.print("Le prenom ne peut pas être vide. Prenom : ");
+            System.out.print("Le prénom ne peut pas être vide. Prénom : ");
             firstName = scanner.nextLine().trim();
         }
         client.setFirstName(firstName);
@@ -115,9 +117,20 @@ public class GestionnaireController {
         String password = generatePassword(client.getFirstName());
         client.setPassword(password);
 
+        // CREATION AUTOMATIQUE DU COMPTE
+        System.out.println("\nCréation du compte bancaire...");
+        BanqueService banqueService = new BanqueService();
+        Compte compteClient = banqueService.createCompteForClient(client);
+
+        // Ajouter le compte au client
+        client.getComptes().put(compteClient.getAccountNumber(), compteClient);
+
         System.out.println();
-        System.out.println("  Client cree avec succès !");
-        System.out.println("    Mot de passe   : " + password);
+        System.out.println("Client cree avec succes !");
+        System.out.println("Mot de passe : " + password);
+        System.out.println("Numero de compte : " + compteClient.getAccountNumber());
+        System.out.println("Solde initial : " + compteClient.getSolde() + " MAD");
+        System.out.println("Type de compte : " + compteClient.getTypeCompte());
 
         return client;
     }

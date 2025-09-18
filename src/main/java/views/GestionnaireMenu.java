@@ -3,7 +3,6 @@ package main.java.views;
 import java.util.Scanner;
 
 import main.java.controllers.GestionnaireController;
-import main.java.models.User;
 
 public class GestionnaireMenu {
     private static Scanner scanner = Console.getScanner();
@@ -13,7 +12,7 @@ public class GestionnaireMenu {
         System.out.println("║       Welcome to Gestionnaire Menu      ║");
         System.out.println("╚═════════════════════════════════════════╝");
 
-        System.out.println("Please enter your authentication credentials:");
+        System.out.println("Please enter your authentication credentials: ");
         System.out.print(" Email: ");
         String email = scanner.nextLine();
         System.out.print(" Password: ");

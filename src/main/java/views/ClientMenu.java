@@ -10,8 +10,12 @@ public class ClientMenu {
 
     public static void afficherMenuClient() {
         System.out.println("Authentification Client requise...\n");
+        boolean isAuthenticated = ClientController.authenticationClient();
 
-        // TODO: Ajouter authentification client (login/password)
+        if (!isAuthenticated) {
+            System.out.println("Erreur d'authentification. Veuillez vérifier vos identifiants.");
+            return;
+        }
 
         while (true) {
             showClientMainMenu();
@@ -20,12 +24,12 @@ public class ClientMenu {
                 int choice = readUserChoice();
 
                 if (!executeClientChoice(choice)) {
-                    break; 
+                    break;
                 }
 
             } catch (InputMismatchException | NumberFormatException e) {
                 System.out.println("Erreur : Veuillez entrer un numero valide.");
-                scanner.nextLine(); 
+                scanner.nextLine();
             }
 
             Console.waitForUserInput();
