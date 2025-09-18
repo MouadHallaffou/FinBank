@@ -11,28 +11,19 @@ public class ClientController {
         System.out.println("╔═════════════════════════════════════════╗");
         System.out.println("║                 LOGIN                   ║");
         System.out.println("╚═════════════════════════════════════════╝");
-        System.out.print("Entrez votre adresse email : ");
-        String email = sc.nextLine().trim();
-        System.out.print("Entrez votre mot de passe : ");
-        String password = sc.nextLine().trim();
+        System.out.print("Entre votre adresse email : ");
+        String email = sc.next().trim();
+        System.out.print("Entre votre mot de passe : ");
+        String password = sc.next().trim();
 
-        Client authenticatedClient = authenticateClient(email, password);
+        Client authenticatedClient = GestionnaireController.authenticateClient(email, password);
         if (authenticatedClient == null) {
-            System.out.println("⚠️ Authentification échouée. Retour au menu principal.");
+            //System.out.println("⚠ Authentification échouée. Retour au menu principal.");
             return false;
         } else {
-            System.out.println("✅ Authentification réussie. Bienvenue, " + authenticatedClient.getFirstName() + "!");
+            //System.out.println(" Authentification réussie. Bienvenue, " + authenticatedClient.getFirstName() + "!");
             return true;
         }
-    }
-
-    private static Client authenticateClient(String email, String password) {
-        Client client = new Client();
-        if (email.equals(client.getEmail()) &&
-                password.equals(client.getPassword())) {
-            return client;
-        }
-        return null;
     }
 
     public static void Deposit() {

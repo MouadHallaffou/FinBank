@@ -4,6 +4,8 @@ import main.java.enums.CompteEnums;
 import main.java.models.Client;
 import main.java.models.Compte;
 
+import java.time.LocalDateTime;
+
 public class BanqueService {
 
     public Compte createCompteForClient(Client client) {
@@ -21,7 +23,7 @@ public class BanqueService {
     }
 
     private static String generateAccountNumberForClient(int clientID) {
-        return "ACC" + System.currentTimeMillis();
+        return "ACC" + LocalDateTime.now();
     }
 
 }

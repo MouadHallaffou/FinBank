@@ -2,6 +2,7 @@ package main.java.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Client extends User {
     private ArrayList<User> clients = new ArrayList<>();
