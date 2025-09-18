@@ -3,6 +3,7 @@ package main.java.services;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import main.java.enums.CompteEnums;
 import main.java.models.Client;
 import main.java.models.Compte;
 import main.java.models.Gestionnaire;
@@ -55,10 +56,10 @@ public class GestionnaireService {
         System.out.println();
 
         System.out.print("Prénom du client : ");
-        String firstName = scanner.nextLine().trim();
+        String firstName = scanner.nextLine().trim().toUpperCase();
         while (firstName.isEmpty()) {
             System.out.print("Le prénom ne peut pas être vide. Prénom : ");
-            firstName = scanner.nextLine().trim();
+            firstName = scanner.nextLine().trim().toUpperCase();
         }
         client.setFirstName(firstName);
 
@@ -101,6 +102,17 @@ public class GestionnaireService {
         return client;
     }
 
+    private static boolean hasActiveAccount(Client client) {
+        boolean hasActiveAccount = false;
+        for (Compte compte : client.getComptes().values()) {
+            if (compte.getStatusCompte() == CompteEnums.StatusCompte.ACTIVE) {
+                hasActiveAccount = true;
+                break;
+            }
+        }
+        return hasActiveAccount;
+    }
+
     public static Client authenticateClient(String email, String password) {
         if (getClients().isEmpty()) {
             System.out.println("Aucun client enregistré dans le système.");
@@ -109,17 +121,24 @@ public class GestionnaireService {
         System.out.println("il existe " + getClients().size() + " clients...");
         for (Client client : getClients()) {
             if (email.equals(client.getEmail())) {
-                if (password.equals(client.getPassword())) {
-                    String fullname = client.getFirstName() + " " + client.getLastName();
-                    System.out.println("╔═════════════════════════════════════════╗");
-                    System.out.println("║   WELCOME " + fullname + " to FinBank     ║");
-                    System.out.println("╚═════════════════════════════════════════╝");
-                    System.out.println();
-                    System.out.println(
-                            "Authentification réussie pour : " + client.getFirstName() + " " + client.getLastName());
-                    return client;
-                } else {
-                    System.out.println("Erreur : Mot de passe incorrect pour l'email : " + email);
+
+                if (hasActiveAccount(client)) {
+                    if (password.equals(client.getPassword())) {
+                        String fullname = client.getFirstName() + " " + client.getLastName();
+                        System.out.println("╔═════════════════════════════════════════╗");
+                        System.out.println("  ║     WELCOME " + fullname + " to FinBank     ║");
+                        System.out.println("╚═════════════════════════════════════════╝");
+                        System.out.println();
+                        System.out.println("Authentification réussie pour : " + client.getFirstName() + " "
+                                + client.getLastName());
+                        return client;
+                    } else {
+                        System.out.println("Erreur : Mot de passe incorrect pour l'email : " + email);
+                        return null;
+                    }
+                }
+                else {
+                    System.out.println("Erreur : Le client avec l'email " + email + " n'a pas de compte actif.");
                     return null;
                 }
             }
@@ -178,22 +197,94 @@ public class GestionnaireService {
         System.out.println("╔═════════════════════════════════════════╗");
         System.out.println("║            FERMUTURE DE COMPTE          ║");
         System.out.println("╚═════════════════════════════════════════╝");
-        System.out.println("entre le nemero de compte a fermme");
-        String clientID = scanner.nextLine().trim();
+        System.out.println("entre le nemero de compte a fermme: ");
+        String numCompte = scanner.nextLine().trim();
 
-//        for(Client client : getClients()){
-//            if (client.getUserID().equals(clientID)) {
-//
-//            }
-//        }
-
-
-
+        for (Client client : getClients()) {
+            if (client.getComptes().containsKey(numCompte)) {
+                System.out.println("are you sure to close this compte ? (yes/no)");
+                String confirmation = scanner.nextLine().trim();
+                if (confirmation.equals("yes")) {
+                    Compte compte = client.getComptes().get(numCompte);
+                    compte.setStatusCompte(CompteEnums.StatusCompte.CLOSED);
+                    System.out.println("Compte numéro " + numCompte + " fermé avec succès.");
+                } else {
+                    System.out.println("Fermeture du compte annulée.");
+                }
+                return;
+            }
+        }
     }
 
     public static void consulteReleves() {
-        System.out.println("Consultation des releves...");
+        System.out.println("╔═════════════════════════════════════════╗");
+        System.out.println("║           CONSULTE LES RELEVES          ║");
+        System.out.println("╚═════════════════════════════════════════╝");
 
+        if (getClients().isEmpty()) {
+            System.out.println("Aucun client enregistré dans le système.");
+            return;
+        }
+
+        System.out.println("Choisissez une option :");
+        System.out.println("1. Voir les relevés d'un client spécifique");
+        System.out.println("2. Voir les relevés de tous les clients");
+        System.out.print("Votre choix : ");
+
+        String choix = scanner.nextLine().trim();
+
+        switch (choix) {
+            case "1":
+                consulteRelevesClient();
+                break;
+            case "2":
+                consulteRelevevesTousClients();
+                break;
+            default:
+                System.out.println("Choix invalide.");
+        }
+    }
+
+    private static void consulteRelevesClient() {
+        System.out.print("Entrez l'email du client : ");
+        String email = scanner.nextLine().trim();
+
+        for (Client client : getClients()) {
+            if (client.getEmail().equals(email)) {
+                System.out.println("\n--- Relevés de " + client.getFirstName() + " " + client.getLastName() + " ---");
+                if (client.getComptes().isEmpty()) {
+                    System.out.println("Ce client n'a aucun compte.");
+                } else {
+                    for (Compte compte : client.getComptes().values()) {
+                        System.out.println("Compte N: " + compte.getAccountNumber());
+                        System.out.println("Type: " + compte.getTypeCompte());
+                        System.out.println("Solde: " + compte.getSolde() + " MAD");
+                        // System.out.println("Historique: " + compte.getHistorique());
+                        System.out.println("----------------------------");
+                    }
+                }
+                return;
+            }
+        }
+        System.out.println("Aucun client trouvé avec cet email.");
+    }
+
+    private static void consulteRelevevesTousClients() {
+        System.out.println("\n--- Relevés de tous les clients ---");
+        for (Client client : getClients()) {
+            System.out.println(
+                    "\nClient: " + client.getFirstName() + " " + client.getLastName() + " (" + client.getEmail() + ")");
+            if (client.getComptes().isEmpty()) {
+                System.out.println("  Aucun compte");
+            } else {
+                for (Compte compte : client.getComptes().values()) {
+                    System.out.println("  Compte N°: " + compte.getAccountNumber());
+                    System.out.println("  Solde: " + compte.getSolde() + " MAD");
+                    System.out.println("  Type: " + compte.getTypeCompte());
+                }
+            }
+            System.out.println("----------------------------");
+        }
     }
 
     public Gestionnaire createNewGestionnaire() {

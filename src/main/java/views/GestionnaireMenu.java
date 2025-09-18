@@ -17,9 +17,26 @@ public class GestionnaireMenu {
         String email = scanner.nextLine();
         System.out.print(" Password: ");
         String password = scanner.nextLine();
-        if (!GestionnaireService.authenticateGestionnaire(email, password)) {
-            System.out.println("⚠ Authentication failed. Returning to main menu.");
-            return;
+        while (true) {
+            if (GestionnaireService.authenticateGestionnaire(email, password)) {
+            break; 
+            } else {
+            System.out.println("⚠ Authentication failed.");
+            System.out.println("1. Try again");
+            System.out.println("2. Exit to main menu");
+            System.out.print("✦ Enter your choice: ");
+            
+            int choice = Integer.parseInt(scanner.nextLine());
+            if (choice == 1) {
+                System.out.print(" Email: ");
+                email = scanner.nextLine();
+                System.out.print(" Password: ");
+                password = scanner.nextLine();
+            } else {
+                System.out.println("✦ Returning to main menu.");
+                return;
+            }
+            }
         }
         while (true) {
             System.out.println("╔═════════════════════════════════════════╗");

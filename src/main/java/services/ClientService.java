@@ -2,10 +2,11 @@ package main.java.services;
 
 import java.util.Scanner;
 import main.java.models.Client;
+import main.java.views.Console;
 
 public class ClientService {
 
-    public static boolean authenticationClient() {
+    public boolean authenticationClient() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Authentification Client requise...\n");
         System.out.println("╔═════════════════════════════════════════╗");
@@ -18,30 +19,47 @@ public class ClientService {
 
         Client authenticatedClient = GestionnaireService.authenticateClient(email, password);
         if (authenticatedClient == null) {
-            //System.out.println("⚠ Authentification échouée. Retour au menu principal.");
             return false;
         } else {
-            //System.out.println(" Authentification réussie. Bienvenue, " + authenticatedClient.getFirstName() + "!");
             return true;
         }
     }
 
-    public static void Deposit() {
+    public void Deposit() {
         System.out.println("╔═════════════════════════════════════════╗");
         System.out.println("║            DEPOT D'ARGENT               ║");
         System.out.println("╚═════════════════════════════════════════╝");
+
     }
 
-    public static void Withdraw() {
+    public void Withdraw() {
         System.out.println("╔═════════════════════════════════════════╗");
         System.out.println("║           RETRAIT D'ARGENT              ║");
         System.out.println("╚═════════════════════════════════════════╝");
     }
 
-    public static void Transfer() {
+    public void Transfer() {
         System.out.println("╔═════════════════════════════════════════╗");
         System.out.println("║                VIREMENT                 ║");
         System.out.println("╚═════════════════════════════════════════╝");
+        System.err.println("entre le nemero de compte recevoir: ");
+        String accountNumber = Console.getScanner().nextLine().trim();
+        System.err.println("entre le montant a deposer: ");
+        double amount = Double.parseDouble(Console.getScanner().nextLine().trim());
+        System.err.println("motif du depot: ");
+        String motive = Console.getScanner().nextLine().trim();
+        System.err.println("entre le mot de passe: ");
+        String password = Console.getScanner().nextLine().trim();
+        for (Client client : GestionnaireService.getClients()) {
+            if (client.getPassword().equals(password)) {
+                System.out.println("Authentification reussie.");
+                break;
+            } else {
+                System.out.println("Erreur: mot de passe incorrect.");
+                return;
+            }
+        }
+        System.out.println("Vous avez deposer " + amount + " DH sur le compte " + accountNumber + " pour le motif suivant: " + motive);
     }
 
 }

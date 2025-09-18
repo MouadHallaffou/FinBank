@@ -7,10 +7,11 @@ import main.java.services.FichierService;
 
 public class ClientMenu {
     private static Scanner scanner = Console.getScanner();
+    private static ClientService clientService = new ClientService();
 
     public static void afficherMenuClient() {
         System.out.println("Authentification Client requise...\n");
-        boolean isAuthenticated = ClientService.authenticationClient();
+        boolean isAuthenticated = clientService.authenticationClient();
 
         if (!isAuthenticated) {
             System.out.println("Erreur d'authentification. Veuillez vérifier vos identifiants.");
@@ -57,15 +58,15 @@ public class ClientMenu {
         switch (choice) {
             case 1:
                 System.out.println("Preparation de l'operation de depôt...");
-                ClientService.Deposit();
+                clientService.Deposit();
                 break;
             case 2:
                 System.out.println("Preparation de l'operation de retrait...");
-                ClientService.Withdraw();
+                clientService.Withdraw();
                 break;
             case 3:
                 System.out.println("Preparation de l'operation de virement...");
-                ClientService.Transfer();
+                clientService.Transfer();
                 break;
             case 4:
                 System.out.println("Generation du releve de compte...");
