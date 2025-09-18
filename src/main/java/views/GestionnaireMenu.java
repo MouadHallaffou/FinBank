@@ -2,7 +2,7 @@ package main.java.views;
 
 import java.util.Scanner;
 
-import main.java.controllers.GestionnaireController;
+import main.java.services.GestionnaireService;
 
 public class GestionnaireMenu {
     private static Scanner scanner = Console.getScanner();
@@ -17,7 +17,7 @@ public class GestionnaireMenu {
         String email = scanner.nextLine();
         System.out.print(" Password: ");
         String password = scanner.nextLine();
-        if (!GestionnaireController.authenticateGestionnaire(email, password)) {
+        if (!GestionnaireService.authenticateGestionnaire(email, password)) {
             System.out.println("⚠ Authentication failed. Returning to main menu.");
             return;
         }
@@ -35,16 +35,16 @@ public class GestionnaireMenu {
             int choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
-                    GestionnaireController.createClient();
+                    GestionnaireService.createClient();
                     break;
                 case 2:
-                    GestionnaireController.updateInfo();
+                    GestionnaireService.updateInfo();
                     break;
                 case 3:
-                    GestionnaireController.closeCompte();
+                    GestionnaireService.closeCompte();
                     break;
                 case 4:
-                    GestionnaireController.consulteReleves();
+                    GestionnaireService.consulteReleves();
                     break;
                 case 5:
                     System.out.println("✦ Exiting system. Goodbye!");

@@ -1,9 +1,9 @@
-package main.java.controllers;
+package main.java.services;
 
 import java.util.Scanner;
 import main.java.models.Client;
 
-public class ClientController {
+public class ClientService {
 
     public static boolean authenticationClient() {
         Scanner sc = new Scanner(System.in);
@@ -16,7 +16,7 @@ public class ClientController {
         System.out.print("Entre votre mot de passe : ");
         String password = sc.next().trim();
 
-        Client authenticatedClient = GestionnaireController.authenticateClient(email, password);
+        Client authenticatedClient = GestionnaireService.authenticateClient(email, password);
         if (authenticatedClient == null) {
             //System.out.println("⚠ Authentification échouée. Retour au menu principal.");
             return false;

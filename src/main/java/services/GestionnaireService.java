@@ -1,4 +1,4 @@
-package main.java.controllers;
+package main.java.services;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -6,26 +6,21 @@ import java.util.Scanner;
 import main.java.models.Client;
 import main.java.models.Compte;
 import main.java.models.Gestionnaire;
-import main.java.services.BanqueService;
 import main.java.utils.Validation;
 
-public class GestionnaireController {
+public class GestionnaireService {
     private static Scanner scanner = new Scanner(System.in);
     private static int nextUserID = 1;
-    private ArrayList<Client> clients = new ArrayList<>();
+    private static ArrayList<Client> clients = new ArrayList<>();
 
-    public ArrayList<Client> getClients() {
+    public static ArrayList<Client> getClients() {
         return clients;
     }
 
-    public void setClients(ArrayList<Client> clients) {
-        this.clients = clients;
-    }
-
-    private void addClientToArraylist(Client client) {
+    public static void addClientToArraylist(Client client) {
         clients.add(client);
+        System.out.println("Client ajouté à la liste. Total clients : " + clients.size());
     }
-
 
     public static Gestionnaire createDefaultGestionnaire() {
         Gestionnaire defaultGestionnaire = new Gestionnaire();
@@ -101,24 +96,27 @@ public class GestionnaireController {
         System.out.println("Solde initial : " + compteClient.getSolde() + " MAD");
         System.out.println("Type de compte : " + compteClient.getTypeCompte());
 
-        GestionnaireController gestionnaireController = new GestionnaireController();
-        gestionnaireController.addClientToArraylist(client);
+        addClientToArraylist(client);
 
         return client;
     }
 
     public static Client authenticateClient(String email, String password) {
-        GestionnaireController gestionnaireController = new GestionnaireController();
-        
-        if (gestionnaireController.getClients().isEmpty()) {
-            System.out.println("Erreur : Aucun client enregistré dans le système.");
+        if (getClients().isEmpty()) {
+            System.out.println("Aucun client enregistré dans le système.");
             return null;
         }
-        
-        for (Client client : gestionnaireController.getClients()) {
+        System.out.println("il existe " + getClients().size() + " clients...");
+        for (Client client : getClients()) {
             if (email.equals(client.getEmail())) {
                 if (password.equals(client.getPassword())) {
-                    System.out.println("Authentification réussie pour : " + client.getFirstName() + " " + client.getLastName());
+                    String fullname = client.getFirstName() + " " + client.getLastName();
+                    System.out.println("╔═════════════════════════════════════════╗");
+                    System.out.println("║   WELCOME " + fullname + " to FinBank     ║");
+                    System.out.println("╚═════════════════════════════════════════╝");
+                    System.out.println();
+                    System.out.println(
+                            "Authentification réussie pour : " + client.getFirstName() + " " + client.getLastName());
                     return client;
                 } else {
                     System.out.println("Erreur : Mot de passe incorrect pour l'email : " + email);
@@ -126,7 +124,6 @@ public class GestionnaireController {
                 }
             }
         }
-        
         System.out.println("Erreur : Aucun client trouvé avec l'email : " + email);
         return null;
     }
@@ -135,11 +132,12 @@ public class GestionnaireController {
         System.out.println("╔═════════════════════════════════════════╗");
         System.out.println("║         MODIFIER LES INFORMATIONS       ║");
         System.out.println("╚═════════════════════════════════════════╝");
-        GestionnaireController gestionnaireController = new GestionnaireController();
-        System.out.println("entre l'email du client a modifier: ");
-        String chekedEmail = scanner.nextLine().trim();
-        for (Client client : gestionnaireController.getClients()){
-             if (client.getEmail().equals(chekedEmail)){
+
+        System.out.println("Entrez l'email du client à modifier: ");
+        String checkedEmail = scanner.nextLine().trim();
+
+        for (Client client : getClients()) {
+            if (client.getEmail().equals(checkedEmail)) {
                 System.out.print("Nouveau prénom (actuel: " + client.getFirstName() + "): ");
                 String newFirstName = scanner.nextLine().trim();
                 if (!newFirstName.isEmpty()) {
@@ -151,7 +149,7 @@ public class GestionnaireController {
                 if (!newLastName.isEmpty() && Validation.isValidLastName(newLastName)) {
                     client.setLastName(newLastName);
                 } else if (!newLastName.isEmpty()) {
-                    System.out.println("Nom invalide. Le nom n'a pas été modifié.");
+                    System.out.println(" Nom invalide. Le nom n'a pas été modifié.");
                 }
 
                 System.out.print("Nouvel email (actuel: " + client.getEmail() + "): ");
@@ -159,24 +157,37 @@ public class GestionnaireController {
                 if (!newEmail.isEmpty() && Validation.isValidEmail(newEmail)) {
                     client.setEmail(newEmail);
                 } else if (!newEmail.isEmpty()) {
-                    System.out.println("Email invalide. L'email n'a pas été modifié.");
+                    System.out.println(" Email invalide. L'email n'a pas été modifié.");
                 }
 
-                System.out.println("Nouveau mot de passe : ");
+                System.out.print("Nouveau mot de passe : ");
                 String newPassword = scanner.nextLine().trim();
                 if (!newPassword.isEmpty()) {
                     client.setPassword(newPassword);
                 }
 
                 System.out.println("Informations mises à jour avec succès !");
-                return; 
-             }
+                return;
+            }
         }
 
+        System.out.println("Aucun client trouvé avec cet email.");
     }
 
     public static void closeCompte() {
-        System.out.println("Fermeture de compte...");
+        System.out.println("╔═════════════════════════════════════════╗");
+        System.out.println("║            FERMUTURE DE COMPTE          ║");
+        System.out.println("╚═════════════════════════════════════════╝");
+        System.out.println("entre le nemero de compte a fermme");
+        String clientID = scanner.nextLine().trim();
+
+//        for(Client client : getClients()){
+//            if (client.getUserID().equals(clientID)) {
+//
+//            }
+//        }
+
+
 
     }
 
@@ -230,6 +241,5 @@ public class GestionnaireController {
 
         return gestionnaire;
     }
-
 
 }

@@ -2,7 +2,7 @@ package main.java.views;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import main.java.controllers.ClientController;
+import main.java.services.ClientService;
 import main.java.services.FichierService;
 
 public class ClientMenu {
@@ -10,7 +10,7 @@ public class ClientMenu {
 
     public static void afficherMenuClient() {
         System.out.println("Authentification Client requise...\n");
-        boolean isAuthenticated = ClientController.authenticationClient();
+        boolean isAuthenticated = ClientService.authenticationClient();
 
         if (!isAuthenticated) {
             System.out.println("Erreur d'authentification. Veuillez vérifier vos identifiants.");
@@ -37,10 +37,6 @@ public class ClientMenu {
     }
 
     private static void showClientMainMenu() {
-        System.out.println("╔═════════════════════════════════════════╗");
-        System.out.println("║        MENU CLIENT - FinBank            ║");
-        System.out.println("╚═════════════════════════════════════════╝");
-        System.out.println();
         System.out.println("Vos Operations Bancaires :");
         System.out.println();
         System.out.println("1 ➤ Effectuer un Depot");
@@ -61,15 +57,15 @@ public class ClientMenu {
         switch (choice) {
             case 1:
                 System.out.println("Preparation de l'operation de depôt...");
-                ClientController.Deposit();
+                ClientService.Deposit();
                 break;
             case 2:
                 System.out.println("Preparation de l'operation de retrait...");
-                ClientController.Withdraw();
+                ClientService.Withdraw();
                 break;
             case 3:
                 System.out.println("Preparation de l'operation de virement...");
-                ClientController.Transfer();
+                ClientService.Transfer();
                 break;
             case 4:
                 System.out.println("Generation du releve de compte...");
