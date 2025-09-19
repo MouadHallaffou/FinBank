@@ -59,7 +59,7 @@ public class BanqueService {
         }
     }
 
-    public void Withdraw() {
+    public void Withdraw() throws Exception {
         System.out.println("╔═════════════════════════════════════════╗");
         System.out.println("║           RETRAIT D'ARGENT              ║");
         System.out.println("╚═════════════════════════════════════════╝");
@@ -76,7 +76,7 @@ public class BanqueService {
                     if (client.getPassword().equals(passwordcheked)) {
                         compte.setSolde(compte.getSolde() - soldeRetir);
 
-                        Transaction transaction = new Transaction(CompteEnums.TypeTransaction.DEPOSIT, compte,soldeRetir.floatValue());
+                        Transaction transaction = new Transaction(CompteEnums.TypeTransaction.WITHDRAWAL, compte,soldeRetir.floatValue());
                         compte.getHistoriqueTransactions().add(transaction);
 
                         System.out.println("Retrait effectue avec succes. Nouveau solde: " + compte.getSolde());
@@ -84,14 +84,15 @@ public class BanqueService {
                         return;
                     } else {
                         System.err.println("Mot de passe incorrect.");
-                        return;
+                        throw new Exception("Mot de passe incorrect pour le retrait");
                     }
                 } else {
                     System.err.println("Solde insuffisant.");
-                    return;
+                    throw new Exception("Solde insuffisant pour effectuer le retrait");
                 }
             }
         }
+        throw new Exception("Aucun compte trouvé pour effectuer le retrait");
     }
 
     public void Transfer() {

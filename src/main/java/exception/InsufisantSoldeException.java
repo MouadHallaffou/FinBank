@@ -1,6 +1,6 @@
 package main.java.exception;
 
-public class CheckedException {
+public class InsufisantSoldeException extends Exception{
 
     public void throwCheckedException() throws Exception {
         throw new Exception("This is a checked exception");

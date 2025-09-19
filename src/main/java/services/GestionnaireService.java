@@ -7,6 +7,7 @@ import main.java.enums.CompteEnums;
 import main.java.models.Client;
 import main.java.models.Compte;
 import main.java.models.Gestionnaire;
+import main.java.models.Transaction;
 import main.java.utils.Validation;
 
 public class GestionnaireService {
@@ -20,7 +21,8 @@ public class GestionnaireService {
 
     public static void addClientToArraylist(Client client) {
         clients.add(client);
-        // System.out.println("Client ajouté à la liste. Total clients : " + clients.size());
+        // System.out.println("Client ajouté à la liste. Total clients : " +
+        // clients.size());
     }
 
     public static Gestionnaire createDefaultGestionnaire() {
@@ -82,12 +84,10 @@ public class GestionnaireService {
         String password = generatePassword(client.getFirstName());
         client.setPassword(password);
 
-        // CREATION AUTOMATIQUE DU COMPTE
         System.out.println("\nCréation du compte bancaire...");
         BanqueService banqueService = new BanqueService();
         Compte compteClient = banqueService.createCompteForClient(client);
 
-        // Ajouter le compte au client
         client.getComptes().put(compteClient.getAccountNumber(), compteClient);
 
         System.out.println();
@@ -258,7 +258,14 @@ public class GestionnaireService {
                         System.out.println("Compte N: " + compte.getAccountNumber());
                         System.out.println("Type: " + compte.getTypeCompte());
                         System.out.println("Solde: " + compte.getSolde() + " MAD");
-                        System.out.println("Historique: " + compte.getHistoriqueTransactions());
+                        for (Transaction trans : compte.getHistoriqueTransactions()) {
+                            System.out.println("----------------------------");
+                            System.out.println("idTranction: " + trans.getIdTranction());
+                            System.out.println("Type: " + trans.getType());
+                            System.out.println("Montant: " + trans.getMontant() + " MAD");
+                            System.out.println("Date: " + trans.getDateTransaction());
+                            System.out.println("----------------------------");
+                        }
                         System.out.println("----------------------------");
                     }
                 }
@@ -277,9 +284,18 @@ public class GestionnaireService {
                 System.out.println("  Aucun compte");
             } else {
                 for (Compte compte : client.getComptes().values()) {
-                    System.out.println("  Compte N°: " + compte.getAccountNumber());
+                    System.out.println("  Compte N : " + compte.getAccountNumber());
                     System.out.println("  Solde: " + compte.getSolde() + " MAD");
                     System.out.println("  Type: " + compte.getTypeCompte());
+                    for (Transaction trans : compte.getHistoriqueTransactions()) {
+                        System.out.println("----------------------------");
+                        System.out.println("idTranction: " + trans.getIdTranction());
+                        System.out.println("Type: " + trans.getType());
+                        System.out.println("Montant: " + trans.getMontant() + " MAD");
+                        System.out.println("Date: " + trans.getDateTransaction());
+                        System.out.println("----------------------------");
+                    }
+                    System.out.println("----------------------------");
                 }
             }
             System.out.println("----------------------------");

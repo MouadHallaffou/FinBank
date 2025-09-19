@@ -78,4 +78,16 @@ public class Transaction {
         this.compteSource = compteSource;
     }
 
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "idTranction=" + idTranction +
+                ", type=" + type +
+                ", montant=" + montant +
+                ", dateTransaction=" + dateTransaction +
+                // ", compteSource=" + compteSource +
+                // ", compteDestination=" + compteDestination +
+                '}';
+    }
+
 }

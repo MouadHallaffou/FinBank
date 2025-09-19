@@ -64,7 +64,11 @@ public class ClientMenu {
                 break;
             case 2:
                 System.out.println("Preparation de l'operation de retrait...");
-                banqueService.Withdraw();
+                try {
+                    banqueService.Withdraw();
+                } catch (Exception e) {
+                    System.out.println("Erreur lors du retrait: " + e.getMessage());
+                }
                 break;
             case 3:
                 System.out.println("Preparation de l'operation de virement...");

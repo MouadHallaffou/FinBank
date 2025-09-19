@@ -24,6 +24,19 @@ public class Compte {
         this.typeCompte = typeCompte;
     }
 
+    @Override
+    public String toString() {
+        return "Compte{" +
+                "clientID=" + clientID +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", solde=" + solde +
+                ", statusCompte=" + statusCompte +
+                ", typeTransaction=" + typeTransaction +
+                ", historiqueTransactions=" + historiqueTransactions +
+                ", typeCompte=" + typeCompte +
+                '}';
+    }
+
     public Compte() {
     }
     
