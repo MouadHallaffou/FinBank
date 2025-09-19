@@ -13,7 +13,6 @@ public class ClientMenu {
 
     public static void afficherMenuClient() {
         ClientService clientService = new ClientService();
-        System.out.println("Authentification Client requise...\n");
         boolean isAuthenticated = clientService.authenticationClient();
 
         if (!isAuthenticated) {

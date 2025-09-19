@@ -13,15 +13,15 @@ public class GestionnaireMenu {
         System.out.println("╚═════════════════════════════════════════╝");
 
         System.out.println("Please enter your authentication credentials: ");
-        System.out.print(" Email: ");
+        System.err.print(" entre votre adress Email: ");
         String email = scanner.nextLine();
-        System.out.print(" Password: ");
+        System.err.print(" entre votre Password: ");
         String password = scanner.nextLine();
         while (true) {
             if (GestionnaireService.authenticateGestionnaire(email, password)) {
             break; 
             } else {
-            System.out.println("⚠ Authentication failed.");
+            System.err.println("⚠ Authentication failed.");
             System.out.println("1. Try again");
             System.out.println("2. Exit to main menu");
             System.out.print("✦ Enter your choice: ");
@@ -39,9 +39,9 @@ public class GestionnaireMenu {
             }
         }
         while (true) {
-            System.out.println("╔═════════════════════════════════════════╗");
-            System.out.println("║         Welcome MOUAD HALLAFFOU         ║");
-            System.out.println("╚═════════════════════════════════════════╝");
+            System.out.println("╔════════════════════════════════════════════════╗");
+            System.out.println("║       Welcome MOUAD HALLAFFOU to FinBanck      ║");
+            System.out.println("╚════════════════════════════════════════════════╝");
             System.out.println("1. ➤ Ajoute un client");
             System.out.println("2. ➤ Mettre a jour les informations");
             System.out.println("3. ➤ Fermer un compte");
