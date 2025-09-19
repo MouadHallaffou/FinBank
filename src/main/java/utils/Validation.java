@@ -10,6 +10,13 @@ public class Validation {
         return email.matches(emailRegex);
     }
 
+    public static boolean isValidPassword(String password){
+        if (password.isEmpty() || password.trim().length() > 6) {
+            return true;
+        }
+        return false;
+    }
+
     public static boolean isValidFirstName(String firstName) {
         return firstName != null && !firstName.trim().isEmpty();
     }

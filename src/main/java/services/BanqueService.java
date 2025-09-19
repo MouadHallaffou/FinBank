@@ -31,7 +31,7 @@ public class BanqueService {
         System.out.println("║            DEPOT D'ARGENT               ║");
         System.out.println("╚═════════════════════════════════════════╝");
 
-        System.err.print("entre le montant: ");
+        System.err.print("entre le montant a depose: ");
         Double soldeDepose = scanner.nextDouble();
         for (Client client : GestionnaireService.getClients()) {
             for (Compte compte : client.getComptes().values()) {
@@ -109,17 +109,67 @@ public class BanqueService {
         System.err.print("entre le mot de passe: ");
         String password = scanner.next().trim();
 
+        Client senderClient = null;
+        Compte senderCompte = null;
+        
         for (Client client : GestionnaireService.getClients()) {
             if (client.getPassword().equals(password)) {
-                System.out.println("Authentification reussie.");
+                for (Compte compte : client.getComptes().values()) {
+                if (Validation.isPositifSolde(compte.getSolde()) && 
+                Validation.CompareSolde(compte.getSolde(), amount)) {
+                senderClient = client;
+                senderCompte = compte;
                 break;
+                }
+            }
+            break;
+            }
+        }
+        
+        if (senderClient == null || senderCompte == null) {
+            System.err.println("Erreur: mot de passe incorrect ou solde insuffisant.");
+            return;
+        }
+        
+        Compte receiverCompte = null;
+        for (Client client : GestionnaireService.getClients()) {
+            for (Compte compte : client.getComptes().values()) {
+            if (compte.getAccountNumber().equals(accountNumber)) {
+                receiverCompte = compte;
+                break;
+            }
+            }
+            if (receiverCompte != null) break;
+        }
+        
+        if (receiverCompte == null) {
+            System.err.println("Erreur: compte destinataire introuvable.");
+            return;
+        }
+        
+        if (senderCompte.equals(receiverCompte)) {
+            System.err.println("Erreur: impossible de virer vers le même compte.");
+            return;
+        }
+        
+        if (Validation.isPositifSolde(amount)) {
+            senderCompte.setSolde(senderCompte.getSolde() - amount);
+            receiverCompte.setSolde(receiverCompte.getSolde() + amount);
+            
+            Transaction senderTransaction = new Transaction(CompteEnums.TypeTransaction.TRANSFER, senderCompte, (float) -amount);
+            Transaction receiverTransaction = new Transaction(CompteEnums.TypeTransaction.TRANSFER, receiverCompte, (float) amount);
+            
+            senderCompte.getHistoriqueTransactions().add(senderTransaction);
+            receiverCompte.getHistoriqueTransactions().add(receiverTransaction);
+            
+            System.out.println("Virement effectue avec succes de " + amount + " DH vers le compte " + accountNumber);
+            System.out.println("Nouveau solde expediteur: " + senderCompte.getSolde());
+            System.out.println("Motif: " + motive);
+            return;
             } else {
-                System.err.println("Erreur: mot de passe incorrect.");
+                System.err.println("Erreur: montant de virement non valide.");
                 return;
             }
         }
-        System.out.println("Vous avez deposer " + amount + " DH sur le compte " + accountNumber
-                + " pour le motif suivant: " + motive);
-    }
 
 }

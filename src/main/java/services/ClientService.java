@@ -12,7 +12,7 @@ public class ClientService {
         System.out.println("╚════════════════════════════════════╝");
         System.err.print("Entre votre adresse email : ");
         String email = sc.next().trim();
-        System.out.print("Entre votre mot de passe : ");
+        System.err.print("Entre votre mot de passe : ");
         String password = sc.next().trim();
 
         Client authenticatedClient = GestionnaireService.authenticateClient(email, password);

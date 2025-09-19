@@ -76,7 +76,7 @@ public class ClientMenu {
                 break;
             case 4:
                 System.out.println("Generation du releve de compte...");
-                FichierService.genererReleve();
+                FichierService.consulteReleves();
                 break;
             case 5:
                 System.out.println("Retour au menu principal...");
