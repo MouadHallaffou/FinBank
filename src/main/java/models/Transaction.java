@@ -2,13 +2,33 @@ package main.java.models;
 
 import java.util.Date;
 
+import main.java.enums.CompteEnums;
+import main.java.enums.CompteEnums.TypeTransaction;
+
 public class Transaction {
     private int idTranction;
-    private String type;
+    private CompteEnums.TypeTransaction type;
     private float montant;
     private Date dateTransaction;
     private Compte compteSource;
     private Compte compteDestination;
+    private static int nextTransactionId = 1;
+
+    public Transaction(CompteEnums.TypeTransaction type, Compte compte, float montant) {
+        this.idTranction = nextTransactionId++;
+        this.type = type;
+        this.montant = montant;
+        this.dateTransaction = new Date();
+        if (type == TypeTransaction.DEPOSIT || type == TypeTransaction.WITHDRAWAL) {
+            this.compteSource = compte;
+            this.compteDestination = null;
+        } else {
+            this.compteSource = compte;
+        }
+    }
+
+    public Transaction() {
+    }
 
     public int getIdTranction() {
         return idTranction;
@@ -30,7 +50,7 @@ public class Transaction {
         return montant;
     }
 
-    public String getType() {
+    public CompteEnums.TypeTransaction getType() {
         return type;
     }
 
@@ -38,7 +58,7 @@ public class Transaction {
         this.idTranction = idTranction;
     }
 
-    public void setType(String type) {
+    public void setType(CompteEnums.TypeTransaction type) {
         this.type = type;
     }
 

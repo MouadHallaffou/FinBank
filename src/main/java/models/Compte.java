@@ -20,7 +20,7 @@ public class Compte {
         this.solde = solde;
         this.typeTransaction = typeTransaction;
         this.historiqueTransactions = historiqueTransactions;
-        this.statusCompte = statusCompte;
+        this.statusCompte = CompteEnums.StatusCompte.ACTIVE;
         this.typeCompte = typeCompte;
     }
 
