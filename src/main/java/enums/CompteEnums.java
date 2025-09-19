@@ -11,4 +11,9 @@ public class CompteEnums {
         CURRENT,
         EPARGNE
     }
+
+    public enum StatusCompte {
+        ACTIVE,
+        CLOSED
+    }
 }

@@ -126,7 +126,7 @@ public class GestionnaireService {
                     if (password.equals(client.getPassword())) {
                         String fullname = client.getFirstName() + " " + client.getLastName();
                         System.out.println("╔═════════════════════════════════════════╗");
-                        System.out.println("  ║     WELCOME " + fullname + " to FinBank     ║");
+                        System.out.println("  ║     WELCOME "+fullname+" to FinBank     ║");
                         System.out.println("╚═════════════════════════════════════════╝");
                         System.out.println();
                         System.out.println("Authentification réussie pour : " + client.getFirstName() + " "

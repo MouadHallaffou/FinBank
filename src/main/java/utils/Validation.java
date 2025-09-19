@@ -18,4 +18,12 @@ public class Validation {
         return lastName != null && !lastName.trim().isEmpty();
     }
 
+    public static boolean isPositifSolde(Double solde) {
+        return solde != null && solde > 0;
+    }
+
+    public static boolean CompareSolde(Double soldeCompte , Double depositSolde) {
+        return soldeCompte > 0 && depositSolde > 0 && soldeCompte >= depositSolde;
+    }
+
 }
