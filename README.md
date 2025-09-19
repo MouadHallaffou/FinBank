@@ -57,8 +57,8 @@ finbank/
 
 1. **Cloner le projet**
      ```bash
-     git clone <repository-url>
-     cd finbank
+     git clone https://github.com/MouadHallaffou/FinBank.git
+     cd FinBank
      ```
 
 2. **Compiler le projet**
