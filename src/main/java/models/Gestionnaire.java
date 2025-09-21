@@ -25,5 +25,12 @@ public class Gestionnaire extends User {
         GestionnaireService gestionnaireController = new GestionnaireService();
         gestionnaires.add(gestionnaireController.createNewGestionnaire());
     }
+    @Override
+    public User login(String email, String password) {
+        if (this.email.equals(email) && this.password.equals(password)) {
+            return this;
+        }
+        return null;
+    }
 
 }

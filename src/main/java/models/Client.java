@@ -21,5 +21,11 @@ public class Client extends User {
     public HashMap<String, Compte> getComptes() {
         return comptes;
     }
-
+    @Override
+    public User login(String email, String password) {
+        if (this.email.equals(email) && this.password.equals(password)) {
+            return this;
+        }
+        return null;
+    }
 }

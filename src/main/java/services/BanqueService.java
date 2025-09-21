@@ -1,6 +1,7 @@
 package main.java.services;
 
 import main.java.enums.CompteEnums;
+import main.java.interfaces.IBanqueService;
 import main.java.models.Client;
 import main.java.models.Compte;
 import main.java.models.Transaction;
@@ -8,7 +9,7 @@ import main.java.utils.Validation;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-public class BanqueService {
+public class BanqueService implements IBanqueService{
     private static Scanner scanner = new Scanner(System.in);
 
     public Compte createCompteForClient(Client client) {

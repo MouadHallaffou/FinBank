@@ -71,4 +71,6 @@ public abstract class User {
                 '}';
     }
 
+    public abstract User login(String email, String password);
+
 }
